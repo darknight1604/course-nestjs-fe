@@ -1,4 +1,5 @@
 import { useAuthSync } from "@app/hooks/use-auth-sync";
+import { LoadingPage } from "@app/pages";
 
 interface IAuthProviderProps {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface IAuthProviderProps {
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const { loading } = useAuthSync();
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
   return <>{children}</>;
 };

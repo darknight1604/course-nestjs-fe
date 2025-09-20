@@ -1,4 +1,3 @@
-// hooks/useAuthSync.ts
 import { authAtom } from "@app/shared/atoms/auth-atom";
 import { apiClient } from "@app/shared/http-client";
 import { useAtom } from "jotai";
