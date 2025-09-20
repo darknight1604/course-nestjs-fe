@@ -1,13 +1,17 @@
 import AuthProvider from "@app/shared/ui/auth-provider";
 import Routers from "@app/routes/routers";
 import PositionedSnackbar from "@app/shared/ui/app-snackbar";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "@app/shared/theme";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routers />
-      <PositionedSnackbar />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <Routers />
+        <PositionedSnackbar />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

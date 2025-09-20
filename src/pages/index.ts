@@ -1,5 +1,5 @@
 export { default as HomePage } from "./home";
 export { default as AboutPage } from "./about";
 export { default as LoginPage } from "./login";
-export { default as DashboardPage } from "./dashboard";
+export { default as DashboardPage } from "./admin/dashboard";
 export { default as LoadingPage } from "./loading";
