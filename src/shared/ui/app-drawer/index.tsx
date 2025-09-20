@@ -7,6 +7,8 @@ import List from "@mui/material/List";
 import { useMemo } from "react";
 import SideBarItem from "./side-bar-item";
 import type { ListItemData } from "@app/types";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import { Divider } from "@mui/material";
 
 interface IAppDrawerProps {
   isOpen: boolean;
@@ -34,31 +36,39 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
     ];
   }, []);
 
+  const listItemDatasBelow: ListItemData[] = useMemo(() => {
+    return [
+      {
+        name: "Logout",
+        path: buildPath([routePaths.admin.path, routePaths.logout.path]),
+        icon: <ExitToAppOutlinedIcon />,
+      },
+    ];
+  }, []);
+
   return (
     <Drawer open={isOpen} onClose={toggleDrawer(false)}>
       <Box
-        sx={{ width: width }}
+        sx={{
+          width: width,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
         role="presentation"
         onClick={toggleDrawer(false)}
       >
-        <List>
+        <List sx={{ flex: 1, overflowY: "auto" }}>
           {listItemDatas.map((data) => (
             <SideBarItem data={data} />
           ))}
         </List>
-        {/* <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
+        <Divider />
+        <List>
+          {listItemDatasBelow.map((data) => (
+            <SideBarItem data={data} />
+          ))}
+        </List>
       </Box>
     </Drawer>
   );

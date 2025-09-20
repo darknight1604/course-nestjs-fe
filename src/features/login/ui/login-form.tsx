@@ -31,7 +31,7 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       try {
         login(values, () => {
-          navigate(routePaths.admin.path);
+          navigate(routePaths.admin.path, { replace: true });
         });
       } catch (err) {
         console.error(err);

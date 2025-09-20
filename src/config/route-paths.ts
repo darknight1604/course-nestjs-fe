@@ -8,6 +8,7 @@ export const routePaths: Record<string, RoutePath> = {
   login: { name: "login", path: "/login" },
   ticket: { name: "ticket", path: "/ticket" },
   user: { name: "user", path: "/user" },
+  logout: { name: "logout", path: "/logout" },
 };
 
 export function buildPath(paths: string[]) {

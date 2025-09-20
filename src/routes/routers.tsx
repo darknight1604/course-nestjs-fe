@@ -5,6 +5,7 @@ import {
   DashboardPage,
   HomePage,
   LoginPage,
+  LogoutPage,
   TicketPage,
   UserPage,
 } from "../pages";
@@ -21,6 +22,7 @@ const Routers = () => {
           <Route index element={<DashboardPage />} />
           <Route path={routePaths.ticket.name} element={<TicketPage />} />
           <Route path={routePaths.user.name} element={<UserPage />} />
+          <Route path={routePaths.logout.name} element={<LogoutPage />} />
         </Route>
       </Route>
     </Routes>

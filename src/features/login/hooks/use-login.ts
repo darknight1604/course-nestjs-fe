@@ -16,8 +16,15 @@ export const useLogin = () => {
       const response = await loginApi(request);
       setAuth(response);
       onSuccess();
+      setSnackbar({
+        open: true,
+        message: "Login sucessfully",
+      });
     } catch {
-      setSnackbar({ open: true, message: "Login failed. Please try again." });
+      setSnackbar({
+        open: true,
+        message: "Login failed. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
