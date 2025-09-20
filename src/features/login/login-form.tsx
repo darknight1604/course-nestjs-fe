@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import { useLogin } from "./hooks/use-login";
+import { routePaths } from "@app/config/route-paths";
 
 // ✅ Yup validation schema
 const validationSchema = Yup.object({
@@ -30,7 +31,7 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       try {
         login(values, () => {
-          navigate("/admin");
+          navigate(routePaths.admin.path);
         });
       } catch (err) {
         console.error(err);
