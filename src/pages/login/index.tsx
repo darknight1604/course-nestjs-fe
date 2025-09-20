@@ -1,4 +1,4 @@
-import LoginForm from "@app/features/login/login-form";
+import LoginForm from "@app/features/login/ui/login-form";
 import { authAtom } from "@app/shared/atoms/auth-atom";
 import { Box, Container, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
