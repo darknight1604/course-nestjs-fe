@@ -9,3 +9,9 @@ export interface LoginRequest {
 }
 
 export type VoidCallback = () => void;
+
+export type ListItemData = {
+  path: string;
+  icon: React.ReactElement;
+  name: string;
+};

@@ -2,14 +2,11 @@ import AppDrawer from "@app/shared/ui/app-drawer";
 import { Box, Toolbar } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import TopBar from "./top-bar";
-
-interface AdminLayoutProps {
-  children: React.ReactNode;
-}
+import { Outlet } from "react-router";
 
 const baseDrawerWidth = 240;
 
-const AdminLayout = ({ children }: AdminLayoutProps) => {
+const AdminLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const marginWidth = useMemo(() => {
@@ -42,7 +39,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         }}
       >
         <Toolbar />
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );
