@@ -6,9 +6,10 @@ import {
   HomePage,
   LoginPage,
   LogoutPage,
+  NotFoundPage,
   TicketPage,
   UserPage,
-} from "../pages";
+} from "@app/pages";
 import PrivateRoute from "./private-route";
 
 const Routers = () => {
@@ -16,7 +17,6 @@ const Routers = () => {
     <Routes>
       <Route index element={<HomePage />} path="/" />
       <Route path={routePaths.login.name} element={<LoginPage />} />
-
       <Route path={routePaths.admin.name} element={<PrivateRoute />}>
         <Route element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />
@@ -25,6 +25,7 @@ const Routers = () => {
           <Route path={routePaths.logout.name} element={<LogoutPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
