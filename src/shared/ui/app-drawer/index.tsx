@@ -60,13 +60,13 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
       >
         <List sx={{ flex: 1, overflowY: "auto" }}>
           {listItemDatas.map((data) => (
-            <SideBarItem data={data} />
+            <SideBarItem data={data} key={data.path}/>
           ))}
         </List>
         <Divider />
         <List>
           {listItemDatasBelow.map((data) => (
-            <SideBarItem data={data} />
+            <SideBarItem data={data} key={data.path}/>
           ))}
         </List>
       </Box>
