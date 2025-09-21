@@ -4,6 +4,7 @@ import type { IGetListTicketResponse, SearchTicketQuery } from "@app/types";
 import dayjs from "dayjs";
 import { atom, useAtom } from "jotai";
 import { searchTickets } from "../api";
+import { cleanObject } from "@app/shared/utils/object-utils";
 
 const dataAtom = atom<IGetListTicketResponse | undefined>();
 const loadingAtom = atom<boolean>(false);
@@ -19,15 +20,17 @@ const useFetchTicket = () => {
   const fetchData = async (query: SearchTicketQuery) => {
     setLoading(true);
     try {
-      const response = await searchTickets({
-        ...query,
-        startDate: isNonEmptyString(query.startDate)
-          ? dayjs(query.startDate).startOf("date").toISOString()
-          : "",
-        endDate: isNonEmptyString(query.endDate)
-          ? dayjs(query.endDate).endOf("date").toISOString()
-          : "",
-      });
+      const response = await searchTickets(
+        cleanObject({
+          ...query,
+          startDate: isNonEmptyString(query.startDate)
+            ? dayjs(query.startDate).startOf("date").toISOString()
+            : "",
+          endDate: isNonEmptyString(query.endDate)
+            ? dayjs(query.endDate).endOf("date").toISOString()
+            : "",
+        })
+      );
       setData(response);
     } catch {
       setSnackbar({
