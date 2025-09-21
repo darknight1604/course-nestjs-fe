@@ -3,7 +3,7 @@ import { isNonEmptyString } from "@app/shared/utils/string-utils";
 import type { IGetListTicketResponse, SearchTicketQuery } from "@app/types";
 import dayjs from "dayjs";
 import { atom, useAtom } from "jotai";
-import { searchTickets } from "../api";
+import { searchTickets, deleteTicket as deleteApi } from "../api";
 import { cleanObject } from "@app/shared/utils/object-utils";
 
 const dataAtom = atom<IGetListTicketResponse | undefined>();
@@ -43,7 +43,22 @@ const useFetchTicket = () => {
     }
   };
 
-  return { loading, data, fetchData, currentQuery };
+  const deleteTicket = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteApi(id);
+      await fetchData(currentQuery || {});
+    } catch {
+      setSnackbar({
+        open: true,
+        message: `Delete ticket ${id} failed. Please try again.`,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { loading, data, fetchData, currentQuery, deleteTicket };
 };
 
 export default useFetchTicket;

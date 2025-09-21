@@ -1,4 +1,8 @@
 import { ROW_PER_PAGE, ROW_PER_PAGE_OPTION } from "@app/config/contants";
+import { modalContentAtom, modalOpenAtom } from "@app/shared/atoms";
+import ConfirmationModalChild from "@app/shared/ui/confirmation-modal-child";
+import EmptySearchingData from "@app/shared/ui/empty-searching-data";
+import type { ITicket } from "@app/types";
 import {
   LinearProgress,
   Paper,
@@ -9,15 +13,18 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
+import { useSetAtom } from "jotai";
 import { useCallback, useMemo } from "react";
 import useFetchTicket from "../../hooks";
 import RowItem from "./row-item";
-import TableHeader from "./table-header";
 import { styles } from "./styles";
-import EmptySearchingData from "@app/shared/ui/empty-searching-data";
+import TableHeader from "./table-header";
 
 const TableData = () => {
-  const { loading, data, currentQuery, fetchData } = useFetchTicket();
+  const { loading, data, currentQuery, fetchData, deleteTicket } =
+    useFetchTicket();
+  const setOpen = useSetAtom(modalOpenAtom);
+  const setContent = useSetAtom(modalContentAtom);
 
   const tableProps = useMemo(() => {
     return {
@@ -50,6 +57,21 @@ const TableData = () => {
     fetchData(newQuery);
   };
 
+  const handleDeleteTicket = (ticket: ITicket) => {
+    setContent(
+      <ConfirmationModalChild
+        title="Confirmation"
+        message="Are you sure to do this?"
+        onCancel={() => setOpen(false)}
+        onConfirm={() => {
+          deleteTicket(ticket.id);
+          setOpen(false);
+        }}
+      />
+    );
+    setOpen(true);
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
@@ -59,26 +81,28 @@ const TableData = () => {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={styles.container} aria-label="simple table">
-        <TableHeader />
-        <TableBody>
-          {data?.data.map((row) => (
-            <RowItem data={row} />
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={ROW_PER_PAGE_OPTION}
-              onPageChange={onPageChange}
-              onRowsPerPageChange={onRowsPerPageChange}
-              {...tableProps}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={styles.container} aria-label="simple table">
+          <TableHeader />
+          <TableBody>
+            {data?.data.map((row) => (
+              <RowItem data={row} key={row.id} onDelete={handleDeleteTicket} />
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={ROW_PER_PAGE_OPTION}
+                onPageChange={onPageChange}
+                onRowsPerPageChange={onRowsPerPageChange}
+                {...tableProps}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 

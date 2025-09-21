@@ -1,12 +1,16 @@
 import { DateTimeUtil } from "@app/shared/utils/date-time-utils";
 import type { ITicket } from "@app/types";
-import { TableCell, TableRow } from "@mui/material";
+import { IconButton, TableCell, TableRow } from "@mui/material";
+import { Visibility, Edit, Delete } from "@mui/icons-material";
 
 interface IRowItemProps {
   data: ITicket;
+  onView?: (data: ITicket) => void;
+  onDelete?: (data: ITicket) => void;
+  onEdit?: (data: ITicket) => void;
 }
 
-const RowItem = ({ data }: IRowItemProps) => {
+const RowItem = ({ data, onView, onDelete, onEdit }: IRowItemProps) => {
   return (
     <TableRow key={data.id}>
       <TableCell>{data.title}</TableCell>
@@ -15,6 +19,29 @@ const RowItem = ({ data }: IRowItemProps) => {
       <TableCell>{data.createdBy}</TableCell>
       <TableCell>{DateTimeUtil.formatWithTZ(data.createdDate)}</TableCell>
       <TableCell>{DateTimeUtil.formatWithTZ(data.updatedDate)}</TableCell>
+      <TableCell align="center">
+        <IconButton
+          aria-label="view"
+          color="primary"
+          onClick={() => onView?.(data)}
+        >
+          <Visibility />
+        </IconButton>
+        <IconButton
+          aria-label="edit"
+          color="secondary"
+          onClick={() => onEdit?.(data)}
+        >
+          <Edit />
+        </IconButton>
+        <IconButton
+          aria-label="delete"
+          color="error"
+          onClick={() => onDelete?.(data)}
+        >
+          <Delete />
+        </IconButton>
+      </TableCell>
     </TableRow>
   );
 };
