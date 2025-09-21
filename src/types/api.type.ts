@@ -43,4 +43,13 @@ export interface SearchTicketFormValues {
   startDate?: string;
   endDate?: string;
 }
+
+export interface CreateTicketRequest {
+  title?: string;
+  status?: string;
+  description?: string;
+  assigneeId?: number;
+  teamId?: number;
+  sprintId?: number;
+}
 // End Ticket

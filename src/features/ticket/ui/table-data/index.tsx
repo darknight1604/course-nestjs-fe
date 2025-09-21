@@ -22,9 +22,10 @@ import RowItem from "./row-item";
 import { styles } from "./styles";
 import TableHeader from "./table-header";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { CreateTicketForm } from "../create-form";
 
 const TableData = () => {
-  const { loading, data, currentQuery, fetchData, deleteTicket } =
+  const { loading, data, currentQuery, fetchData, deleteTicket, createTicket } =
     useFetchTicket();
   const setOpen = useSetAtom(modalOpenAtom);
   const setContent = useSetAtom(modalContentAtom);
@@ -75,41 +76,62 @@ const TableData = () => {
     setOpen(true);
   };
 
+  const handleCreateTicket = () => {
+    setContent(
+      <CreateTicketForm
+        onSubmit={(values) => {
+          createTicket(values);
+          setOpen(false);
+        }}
+      />
+    );
+    setOpen(true);
+  };
+
   if (loading) {
     return <LinearProgress />;
-  }
-
-  if (data?.total === 0) {
-    return <EmptySearchingData />;
   }
 
   return (
     <>
       <Stack direction="row" justifyContent="flex-start" spacing={1}>
-        <Button variant="contained" startIcon={<AddOutlinedIcon />}>
+        <Button
+          variant="contained"
+          startIcon={<AddOutlinedIcon />}
+          onClick={handleCreateTicket}
+        >
           CREATE
         </Button>
       </Stack>
-      <TableContainer component={Paper}>
-        <Table sx={styles.container} aria-label="simple table">
-          <TableHeader />
-          <TableBody>
-            {data?.data.map((row) => (
-              <RowItem data={row} key={row.id} onDelete={handleDeleteTicket} />
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={ROW_PER_PAGE_OPTION}
-                onPageChange={onPageChange}
-                onRowsPerPageChange={onRowsPerPageChange}
-                {...tableProps}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+      {data?.total === 0 ? (
+        <EmptySearchingData />
+      ) : (
+        <TableContainer component={Paper}>
+          <Table sx={styles.container} aria-label="simple table">
+            <TableHeader />
+            <TableBody>
+              {data?.data.map((row, index) => (
+                <RowItem
+                  index={index}
+                  data={row}
+                  key={row.id}
+                  onDelete={handleDeleteTicket}
+                />
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={ROW_PER_PAGE_OPTION}
+                  onPageChange={onPageChange}
+                  onRowsPerPageChange={onRowsPerPageChange}
+                  {...tableProps}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      )}
     </>
   );
 };

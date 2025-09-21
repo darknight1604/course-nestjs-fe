@@ -1,5 +1,9 @@
 import { apiClient } from "@app/shared/http-client";
-import type { IGetListTicketResponse, SearchTicketQuery } from "@app/types";
+import type {
+  CreateTicketRequest,
+  IGetListTicketResponse,
+  SearchTicketQuery,
+} from "@app/types";
 
 export async function searchTickets(
   params: SearchTicketQuery
@@ -12,4 +16,10 @@ export async function searchTickets(
 
 export async function deleteTicket(id: number): Promise<void> {
   await apiClient.delete(`/tickets/${id}`);
+}
+
+export async function createTicket(
+  request: CreateTicketRequest
+): Promise<void> {
+  await apiClient.post("/tickets", request);
 }

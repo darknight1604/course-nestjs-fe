@@ -4,15 +4,17 @@ import { IconButton, TableCell, TableRow } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
 
 interface IRowItemProps {
+  index: number;
   data: ITicket;
   onView?: (data: ITicket) => void;
   onDelete?: (data: ITicket) => void;
   onEdit?: (data: ITicket) => void;
 }
 
-const RowItem = ({ data, onView, onDelete, onEdit }: IRowItemProps) => {
+const RowItem = ({ data, onView, onDelete, onEdit, index }: IRowItemProps) => {
   return (
     <TableRow key={data.id}>
+      <TableCell>{index + 1}</TableCell>
       <TableCell>{data.title}</TableCell>
       <TableCell>{data.description}</TableCell>
       <TableCell>{data.status}</TableCell>

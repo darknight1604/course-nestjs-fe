@@ -1,9 +1,17 @@
 import { snackbarAtom } from "@app/shared/atoms/snackbar-atom";
 import { isNonEmptyString } from "@app/shared/utils/string-utils";
-import type { IGetListTicketResponse, SearchTicketQuery } from "@app/types";
+import type {
+  CreateTicketRequest,
+  IGetListTicketResponse,
+  SearchTicketQuery,
+} from "@app/types";
 import dayjs from "dayjs";
 import { atom, useAtom } from "jotai";
-import { searchTickets, deleteTicket as deleteApi } from "../api";
+import {
+  searchTickets,
+  deleteTicket as deleteApi,
+  createTicket as createApi,
+} from "../api";
 import { cleanObject } from "@app/shared/utils/object-utils";
 
 const dataAtom = atom<IGetListTicketResponse | undefined>();
@@ -48,6 +56,10 @@ const useFetchTicket = () => {
     try {
       await deleteApi(id);
       await fetchData(currentQuery || {});
+      setSnackbar({
+        open: true,
+        message: `Delete ticket successfully`,
+      });
     } catch {
       setSnackbar({
         open: true,
@@ -58,7 +70,26 @@ const useFetchTicket = () => {
     }
   };
 
-  return { loading, data, fetchData, currentQuery, deleteTicket };
+  const createTicket = async (request: CreateTicketRequest) => {
+    setLoading(true);
+    try {
+      await createApi(request);
+      await fetchData(currentQuery || {});
+      setSnackbar({
+        open: true,
+        message: `Create ticket successfully`,
+      });
+    } catch {
+      setSnackbar({
+        open: true,
+        message: `Create ticket failed. Please try again.`,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { loading, data, fetchData, currentQuery, deleteTicket, createTicket };
 };
 
 export default useFetchTicket;

@@ -4,6 +4,7 @@ const TableHeader = () => {
   return (
     <TableHead>
       <TableRow>
+        <TableCell>#</TableCell>
         <TableCell>Title</TableCell>
         <TableCell>Description</TableCell>
         <TableCell>Status</TableCell>
