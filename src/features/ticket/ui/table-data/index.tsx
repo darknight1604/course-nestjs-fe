@@ -1,63 +1,70 @@
+import { ROW_PER_PAGE, ROW_PER_PAGE_OPTION } from "@app/config/contants";
 import {
+  LinearProgress,
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableFooter,
-  TableHead,
   TablePagination,
   TableRow,
 } from "@mui/material";
+import { useCallback, useMemo } from "react";
 import useFetchTicket from "../../hooks";
-import { DateTimeUtil } from "@app/shared/utils/date-time-utils";
-import { ROW_PER_PAGE, ROW_PER_PAGE_OPTION } from "@app/config/contants";
-import { useMemo } from "react";
+import RowItem from "./row-item";
+import TableHeader from "./table-header";
+import { styles } from "./styles";
+import EmptySearchingData from "@app/shared/ui/empty-searching-data";
 
 const TableData = () => {
-  const { loading, data } = useFetchTicket();
+  const { loading, data, currentQuery, fetchData } = useFetchTicket();
 
   const tableProps = useMemo(() => {
-    return { page: (data?.page || 1) - 1, count: data?.total || 0 };
-  }, [data?.page, data?.total]);
+    return {
+      page: (currentQuery?.page || 1) - 1 || 0,
+      count: data?.total || 0,
+      rowsPerPage: currentQuery?.limit || ROW_PER_PAGE,
+    };
+  }, [currentQuery?.limit, currentQuery?.page, data?.total]);
 
-  const onPageChange = (event: React.MouseEvent | null, page: number) => {
-    console.log("on page change");
+  const onPageChange = useCallback(
+    (_event: React.MouseEvent | null, page: number) => {
+      const currentPage = currentQuery?.page || 1;
+      let nextPage = 1;
+      if (page >= currentPage) {
+        nextPage = currentPage + 1;
+      } else {
+        nextPage = currentPage - 1;
+      }
+      const newQuery = { ...currentQuery, page: nextPage };
+      fetchData(newQuery);
+    },
+    [currentQuery, fetchData]
+  );
+
+  const onRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const newValue = parseInt(event.target.value, 10);
+    const newQuery = { ...currentQuery, limit: newValue, page: 1 };
+    fetchData(newQuery);
   };
 
   if (loading) {
-    return <div>loading</div>;
+    return <LinearProgress />;
   }
+
+  if (data?.total === 0) {
+    return <EmptySearchingData />;
+  }
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Created By</TableCell>
-            <TableCell>Created Date</TableCell>
-            <TableCell>Updated Date</TableCell>
-          </TableRow>
-        </TableHead>
+      <Table sx={styles.container} aria-label="simple table">
+        <TableHeader />
         <TableBody>
           {data?.data.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell>{row.title}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.status}</TableCell>
-              <TableCell>{row.createdBy}</TableCell>
-              <TableCell>
-                {DateTimeUtil.formatWithTZ(row.createdDate)}
-              </TableCell>
-              <TableCell>
-                {DateTimeUtil.formatWithTZ(row.updatedDate)}
-              </TableCell>
-            </TableRow>
+            <RowItem data={row} />
           ))}
         </TableBody>
         <TableFooter>
@@ -65,7 +72,7 @@ const TableData = () => {
             <TablePagination
               rowsPerPageOptions={ROW_PER_PAGE_OPTION}
               onPageChange={onPageChange}
-              rowsPerPage={ROW_PER_PAGE}
+              onRowsPerPageChange={onRowsPerPageChange}
               {...tableProps}
             />
           </TableRow>

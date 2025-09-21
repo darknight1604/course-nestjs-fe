@@ -3,13 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import useFetchTicket from "../../hooks";
 import { useEffect } from "react";
-
-export interface SearchTicketFormValues {
-  title?: string;
-  status?: string;
-  startDate?: string;
-  endDate?: string;
-}
+import type { SearchTicketFormValues } from "@app/types";
 
 const statusOptions = ["OPEN", "IN_PROGRESS", "DONE", "CLOSED"];
 
@@ -95,7 +89,7 @@ const SearchForm = () => {
                   error={touched.startDate && Boolean(errors.startDate)}
                   helperText={touched.startDate && errors.startDate}
                   fullWidth
-                  slotProps={{ inputLabel: { shrink: true } }} 
+                  slotProps={{ inputLabel: { shrink: true } }}
                 />
 
                 {/* End Date */}

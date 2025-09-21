@@ -36,4 +36,11 @@ export interface SearchTicketQuery extends PaginationQuery {
   teamId?: number;
   sprintId?: number;
 }
+
+export interface SearchTicketFormValues {
+  title?: string;
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+}
 // End Ticket

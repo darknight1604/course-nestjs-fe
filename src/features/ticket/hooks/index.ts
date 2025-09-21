@@ -1,17 +1,20 @@
 import { snackbarAtom } from "@app/shared/atoms/snackbar-atom";
+import { isNonEmptyString } from "@app/shared/utils/string-utils";
 import type { IGetListTicketResponse, SearchTicketQuery } from "@app/types";
+import dayjs from "dayjs";
 import { atom, useAtom } from "jotai";
 import { searchTickets } from "../api";
-import dayjs from "dayjs";
-import { isNonEmptyString } from "@app/shared/utils/string-utils";
 
 const dataAtom = atom<IGetListTicketResponse | undefined>();
 const loadingAtom = atom<boolean>(false);
+
+const currentQueryAtom = atom<SearchTicketQuery>();
 
 const useFetchTicket = () => {
   const [loading, setLoading] = useAtom(loadingAtom);
   const [data, setData] = useAtom(dataAtom);
   const [, setSnackbar] = useAtom(snackbarAtom);
+  const [currentQuery, setCurrentQuery] = useAtom(currentQueryAtom);
 
   const fetchData = async (query: SearchTicketQuery) => {
     setLoading(true);
@@ -32,11 +35,12 @@ const useFetchTicket = () => {
         message: "Search tickets failed. Please try again.",
       });
     } finally {
+      setCurrentQuery(query);
       setLoading(false);
     }
   };
 
-  return { loading, data, fetchData };
+  return { loading, data, fetchData, currentQuery };
 };
 
 export default useFetchTicket;
