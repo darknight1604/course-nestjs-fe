@@ -1,6 +1,9 @@
+import type { ROLES } from "@app/config/contants";
+
 export interface AuthResponse {
   accessToken: string;
   username: string;
+  roles?: ROLES[];
 }
 
 export interface LoginRequest {
@@ -14,6 +17,7 @@ export type ListItemData = {
   path: string;
   icon: React.ReactElement;
   name: string;
+  requiredRoles: ROLES[];
 };
 
 export type WSMessageData = {

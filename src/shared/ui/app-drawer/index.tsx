@@ -1,14 +1,14 @@
 import { buildPath, routePaths } from "@app/config/route-paths";
+import type { ListItemData } from "@app/types";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
+import { Divider } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { useMemo } from "react";
 import SideBarItem from "./side-bar-item";
-import type { ListItemData } from "@app/types";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-import { Divider } from "@mui/material";
 
 interface IAppDrawerProps {
   isOpen: boolean;
@@ -27,11 +27,13 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
         name: "Ticket",
         path: buildPath([routePaths.admin.path, routePaths.ticket.path]),
         icon: <AssignmentOutlinedIcon />,
+        requiredRoles: ["ADMIN", "SUPER_ADMIN"],
       },
       {
         name: "User",
         path: buildPath([routePaths.admin.path, routePaths.user.path]),
         icon: <Person4OutlinedIcon />,
+        requiredRoles: ["ADMIN", "SUPER_ADMIN"],
       },
     ];
   }, []);
@@ -42,6 +44,7 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
         name: "Logout",
         path: buildPath([routePaths.admin.path, routePaths.logout.path]),
         icon: <ExitToAppOutlinedIcon />,
+        requiredRoles: [],
       },
     ];
   }, []);
@@ -56,17 +59,24 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
           flexDirection: "column",
         }}
         role="presentation"
-        onClick={toggleDrawer(false)}
       >
         <List sx={{ flex: 1, overflowY: "auto" }}>
           {listItemDatas.map((data) => (
-            <SideBarItem data={data} key={data.path}/>
+            <SideBarItem
+              data={data}
+              key={data.path}
+              toggleDrawer={toggleDrawer(false)}
+            />
           ))}
         </List>
         <Divider />
         <List>
           {listItemDatasBelow.map((data) => (
-            <SideBarItem data={data} key={data.path}/>
+            <SideBarItem
+              data={data}
+              key={data.path}
+              toggleDrawer={toggleDrawer(false)}
+            />
           ))}
         </List>
       </Box>
