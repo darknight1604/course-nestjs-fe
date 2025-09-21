@@ -1,5 +1,12 @@
 export type ROLES = "ADMIN" | "USER" | "SUPER_ADMIN";
 
+export enum TICKET_STATUS {
+  NEW = "New",
+  INPROGRESS = "Inprogress",
+  TESTING = "Testing",
+  DONE = "Done",
+}
+
 export const DATE_FORMATS = {
   fullTime: "DD/MM/YYYY HH:mm:ss",
   shortTime: "DD/MM/YYYY",

@@ -4,9 +4,9 @@ import * as Yup from "yup";
 import useFetchTicket from "../../hooks";
 import { useEffect } from "react";
 import type { SearchTicketFormValues } from "@app/types";
+import { TICKET_STATUS } from "@app/config/contants";
 
-const statusOptions = ["OPEN", "IN_PROGRESS", "DONE", "CLOSED"];
-
+const statusOptions = Object.values(TICKET_STATUS).concat();
 const validationSchema = Yup.object({
   title: Yup.string().optional(),
   status: Yup.string()

@@ -4,8 +4,10 @@ import ConfirmationModalChild from "@app/shared/ui/confirmation-modal-child";
 import EmptySearchingData from "@app/shared/ui/empty-searching-data";
 import type { ITicket } from "@app/types";
 import {
+  Button,
   LinearProgress,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableContainer,
@@ -19,6 +21,7 @@ import useFetchTicket from "../../hooks";
 import RowItem from "./row-item";
 import { styles } from "./styles";
 import TableHeader from "./table-header";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const TableData = () => {
   const { loading, data, currentQuery, fetchData, deleteTicket } =
@@ -82,6 +85,11 @@ const TableData = () => {
 
   return (
     <>
+      <Stack direction="row" justifyContent="flex-start" spacing={1}>
+        <Button variant="contained" startIcon={<AddOutlinedIcon />}>
+          CREATE
+        </Button>
+      </Stack>
       <TableContainer component={Paper}>
         <Table sx={styles.container} aria-label="simple table">
           <TableHeader />
