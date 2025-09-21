@@ -1,3 +1,5 @@
+import type { ROLES } from "@app/config/contants";
+
 export interface PaginationQuery {
   page?: number; // default 1
   limit?: number; // default 10
@@ -54,3 +56,12 @@ export interface CreateTicketRequest {
   sprintId?: number;
 }
 // End Ticket
+
+export interface IUser {
+  id?: number;
+  username?: string;
+  isActive?: boolean;
+  createdDate?: Date;
+  updatedDate?: Date;
+  roles?: ROLES[];
+}
