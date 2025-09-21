@@ -1,4 +1,5 @@
 import type { ROLES } from "@app/config/contants";
+export * from "./api.type";
 
 export interface AuthResponse {
   accessToken: string;
