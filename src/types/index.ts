@@ -15,3 +15,9 @@ export type ListItemData = {
   icon: React.ReactElement;
   name: string;
 };
+
+export type WSMessageData = {
+  type: "notification" | "background-task";
+  message?: string;
+  data?: unknown;
+};
