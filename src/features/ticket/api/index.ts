@@ -2,6 +2,7 @@ import { apiClient } from "@app/shared/http-client";
 import type {
   CreateTicketRequest,
   IGetListTicketResponse,
+  ITicket,
   SearchTicketQuery,
 } from "@app/types";
 
@@ -22,4 +23,16 @@ export async function createTicket(
   request: CreateTicketRequest
 ): Promise<void> {
   await apiClient.post("/tickets", request);
+}
+
+export async function getTicket(id: number): Promise<ITicket> {
+  const response = await apiClient.get<ITicket>(`/tickets/${id}`);
+
+  return response;
+}
+
+export async function updateTicket(
+  request: CreateTicketRequest
+): Promise<void> {
+  await apiClient.patch(`/tickets/${request.id}`, request);
 }

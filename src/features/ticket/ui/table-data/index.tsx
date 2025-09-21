@@ -68,7 +68,7 @@ const TableData = () => {
         message="Are you sure to do this?"
         onCancel={() => setOpen(false)}
         onConfirm={() => {
-          deleteTicket(ticket.id);
+          deleteTicket(ticket.id || 0);
           setOpen(false);
         }}
       />
@@ -82,6 +82,19 @@ const TableData = () => {
         onSubmit={(values) => {
           createTicket(values);
           setOpen(false);
+        }}
+      />
+    );
+    setOpen(true);
+  };
+
+  const handleEditTicket = (ticket: ITicket) => {
+    setContent(
+      <CreateTicketForm
+        ticketId={ticket.id}
+        onSubmit={() => {
+          setOpen(false);
+          fetchData(currentQuery || {});
         }}
       />
     );
@@ -116,6 +129,7 @@ const TableData = () => {
                   data={row}
                   key={row.id}
                   onDelete={handleDeleteTicket}
+                  onEdit={handleEditTicket}
                 />
               ))}
             </TableBody>

@@ -81,6 +81,15 @@ class HttpClient {
     return this.instance.put(url, data, config);
   }
 
+  // PATCH
+  public patch<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
+    return this.instance.patch(url, data, config);
+  }
+
   // DELETE
   public delete<T = unknown>(
     url: string,

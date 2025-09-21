@@ -17,8 +17,8 @@ export interface PaginationResponse<T> {
 
 // Ticket
 export interface ITicket {
-  id: number;
-  title: string;
+  id?: number;
+  title?: string;
   description?: string;
   createdBy?: string;
   createdDate?: Date;
@@ -45,6 +45,7 @@ export interface SearchTicketFormValues {
 }
 
 export interface CreateTicketRequest {
+  id?: number;
   title?: string;
   status?: string;
   description?: string;
