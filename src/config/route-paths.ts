@@ -10,6 +10,7 @@ export const routePaths: Record<string, RoutePath> = {
   ticket: { name: "ticket", path: "/ticket" },
   user: { name: "user", path: "/user" },
   logout: { name: "logout", path: "/logout" },
+  home: { name: "home", path: "/" },
 };
 
 export function buildPath(paths: string[]) {

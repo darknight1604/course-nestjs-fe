@@ -1,0 +1,8 @@
+export const styles = {
+  container: {
+    height: "100vh",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+};
