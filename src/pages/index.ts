@@ -7,3 +7,4 @@ export { default as TicketPage } from "./admin/ticket";
 export { default as UserPage } from "./admin/user";
 export { default as LogoutPage } from "./admin/logout";
 export { default as NotFoundPage } from "./not-found";
+export { default as RegisterPage } from "./register";

@@ -76,3 +76,7 @@ export interface UpdateUserRequest {
   id?: number;
   isActive?: boolean;
 }
+export interface CreateUserRequest {
+  username?: string;
+  password?: string;
+}

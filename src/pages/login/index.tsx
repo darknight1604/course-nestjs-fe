@@ -5,6 +5,7 @@ import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { styles } from "./styles";
+import { routePaths } from "@app/config/route-paths";
 
 const LoginPage = () => {
   const auth = useAtomValue(authAtom);
@@ -12,7 +13,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth) {
-      navigate("/admin");
+      navigate(routePaths.admin.path);
     }
   }, [auth, navigate]);
 

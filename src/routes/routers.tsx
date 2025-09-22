@@ -7,6 +7,7 @@ import {
   LoginPage,
   LogoutPage,
   NotFoundPage,
+  RegisterPage,
   TicketPage,
   UserPage,
 } from "@app/pages";
@@ -17,6 +18,7 @@ const Routers = () => {
     <Routes>
       <Route index element={<HomePage />} path="/" />
       <Route path={routePaths.login.name} element={<LoginPage />} />
+      <Route path={routePaths.register.name} element={<RegisterPage />} />
       <Route path={routePaths.admin.name} element={<PrivateRoute />}>
         <Route element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />

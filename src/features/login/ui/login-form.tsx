@@ -72,7 +72,9 @@ const LoginForm = () => {
           {error}
         </Typography>
       )}
-
+      <Button variant="text" onClick={() => navigate(routePaths.register.path)}>
+        Sign up
+      </Button>
       <Button
         type="submit"
         fullWidth
