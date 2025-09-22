@@ -1,6 +1,4 @@
 import { routePaths } from "@app/config/route-paths";
-import AdminLayout from "@app/shared/ui/layout";
-import { Route, Routes } from "react-router";
 import {
   DashboardPage,
   HomePage,
@@ -8,9 +6,12 @@ import {
   LogoutPage,
   NotFoundPage,
   RegisterPage,
+  TeamPage,
   TicketPage,
   UserPage,
 } from "@app/pages";
+import AdminLayout from "@app/shared/ui/layout";
+import { Route, Routes } from "react-router";
 import PrivateRoute from "./private-route";
 
 const Routers = () => {
@@ -25,6 +26,7 @@ const Routers = () => {
           <Route path={routePaths.ticket.name} element={<TicketPage />} />
           <Route path={routePaths.user.name} element={<UserPage />} />
           <Route path={routePaths.logout.name} element={<LogoutPage />} />
+          <Route path={routePaths.team.name} element={<TeamPage />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />

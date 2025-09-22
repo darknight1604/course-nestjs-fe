@@ -35,6 +35,12 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
         icon: <Person4OutlinedIcon />,
         requiredRoles: ["SUPER_ADMIN"],
       },
+      {
+        name: "Team",
+        path: buildPath([routePaths.admin.path, routePaths.team.path]),
+        icon: <Person4OutlinedIcon />,
+        requiredRoles: ["ADMIN", "SUPER_ADMIN"],
+      },
     ];
   }, []);
 

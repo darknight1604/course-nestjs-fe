@@ -11,6 +11,7 @@ export const routePaths: Record<string, RoutePath> = {
   user: { name: "user", path: "/user" },
   logout: { name: "logout", path: "/logout" },
   home: { name: "home", path: "/" },
+  team: { name: "team", path: "/team" },
 };
 
 export function buildPath(paths: string[]) {

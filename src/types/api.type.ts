@@ -80,3 +80,32 @@ export interface CreateUserRequest {
   username?: string;
   password?: string;
 }
+
+// End User
+
+export interface ITeam {
+  id?: number;
+  name?: string;
+  createdById?: number;
+  createdBy?: string;
+  createdDate?: Date;
+  updatedDate?: Date;
+}
+
+export type IGetListTeamResponse = PaginationResponse<ITeam>;
+
+export interface SearchTeamQuery extends PaginationQuery {
+  name?: string;
+}
+
+export interface UpdateTeamRequest {
+  id?: number;
+  name?: string;
+}
+
+export interface CreateTeamRequest {
+  name: string;
+}
+export interface SearchTeamFormValues {
+  name?: string;
+}

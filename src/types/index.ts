@@ -18,7 +18,7 @@ export type ListItemData = {
   path: string;
   icon: React.ReactElement;
   name: string;
-  requiredRoles: ROLES[];
+  requiredRoles: string[];
 };
 
 export type WSMessageData = {
