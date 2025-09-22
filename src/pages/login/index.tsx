@@ -7,13 +7,14 @@ import { useNavigate } from "react-router";
 import { styles } from "./styles";
 import { routePaths } from "@app/config/route-paths";
 import { Home } from "@mui/icons-material";
+import { ROLES } from "@app/config/contants";
 
 const LoginPage = () => {
   const auth = useAtomValue(authAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth) {
+    if (auth && !auth.roles?.includes(ROLES.USER)) {
       navigate(routePaths.admin.path);
     }
   }, [auth, navigate]);

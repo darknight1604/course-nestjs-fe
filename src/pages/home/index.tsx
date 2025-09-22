@@ -1,15 +1,29 @@
-import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
-import { lazy, Suspense } from "react";
-import { styles } from "./styles";
-import { useNavigate } from "react-router";
 import { routePaths } from "@app/config/route-paths";
+import { useLogout } from "@app/features/logout/hooks";
+import { authAtom } from "@app/shared/atoms/auth-atom";
+import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
+import { useAtomValue } from "jotai";
+import { lazy, Suspense, useMemo } from "react";
+import { useNavigate } from "react-router";
+import { styles } from "./styles";
+
+const WorkingAnimation = lazy(
+  () => import("@app/shared/ui/working-animation.lottie")
+);
 
 const HomePage = () => {
+  const { logout } = useLogout();
+  const auth = useAtomValue(authAtom);
   const navigate = useNavigate();
-  const WorkingAnimation = lazy(
-    () => import("@app/shared/ui/working-animation.lottie")
-  );
+  const isLogged = useMemo(() => !!auth, [auth]);
+
   const redirectToLoginPage = () => {
+    if (isLogged) {
+      logout(() => {
+        navigate(routePaths.home.path, { replace: true });
+      });
+      return;
+    }
     navigate(routePaths.login.path);
   };
 
@@ -17,7 +31,7 @@ const HomePage = () => {
     <Box sx={styles.container}>
       <Stack direction="row" justifyContent="flex-end" alignItems="center">
         <Button variant="text" onClick={redirectToLoginPage}>
-          Login
+          {isLogged ? "Logout" : " Login"}
         </Button>
       </Stack>
       <Typography>Feature under development...</Typography>
