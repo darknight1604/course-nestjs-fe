@@ -6,6 +6,7 @@ import { useAtomValue } from "jotai";
 import { lazy, Suspense, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { styles } from "./styles";
+import UserProfile from "@app/shared/ui/user-profile";
 
 const WorkingAnimation = lazy(
   () => import("@app/shared/ui/working-animation.lottie")
@@ -30,6 +31,7 @@ const HomePage = () => {
   return (
     <Box sx={styles.container}>
       <Stack direction="row" justifyContent="flex-end" alignItems="center">
+        <UserProfile />
         <Button variant="text" onClick={redirectToLoginPage}>
           {isLogged ? "Logout" : " Login"}
         </Button>
