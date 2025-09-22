@@ -65,3 +65,15 @@ export interface IUser {
   updatedDate?: Date;
   roles?: ROLES[];
 }
+
+export type IGetListUserResponse = PaginationResponse<IUser>;
+
+export interface SearchUserQuery extends PaginationQuery {
+  username?: string;
+  isActive?: string;
+}
+
+export interface UpdateUserRequest {
+  id?: number;
+  isActive?: boolean;
+}

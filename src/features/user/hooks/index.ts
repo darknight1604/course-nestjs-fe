@@ -1,8 +1,12 @@
 import { snackbarAtom } from "@app/shared/atoms/snackbar-atom";
 import { cleanObject } from "@app/shared/utils/object-utils";
-import type { IGetListUserResponse, SearchUserQuery } from "@app/types";
+import type {
+  IGetListUserResponse,
+  SearchUserQuery,
+  UpdateUserRequest,
+} from "@app/types";
 import { atom, useAtom } from "jotai";
-import { searchUsers } from "../api";
+import { searchUsers, updateUser } from "../api";
 
 const dataAtom = atom<IGetListUserResponse | undefined>();
 const loadingAtom = atom<boolean>(false);
@@ -17,7 +21,7 @@ const useFetchUser = () => {
   const fetchData = async (query: SearchUserQuery) => {
     setLoading(true);
     try {
-      const response = await searchUsers(cleanObject(query));
+      const response = await searchUsers(cleanObject({ ...query }));
       setData(response);
     } catch {
       setSnackbar({
@@ -29,8 +33,22 @@ const useFetchUser = () => {
       setLoading(false);
     }
   };
+  const toggleActive = async (params: UpdateUserRequest) => {
+    setLoading(true);
+    try {
+      await updateUser({ ...params, isActive: !(params.isActive || false) });
+      await fetchData(currentQuery || {});
+    } catch {
+      setSnackbar({
+        open: true,
+        message: "Search users failed. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return { loading, data, fetchData, currentQuery };
+  return { loading, data, fetchData, currentQuery, toggleActive };
 };
 
 export default useFetchUser;

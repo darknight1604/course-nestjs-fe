@@ -15,9 +15,16 @@ import useFetchUser from "../../hooks";
 import RowItem from "./row-item";
 import { styles } from "./styles";
 import TableHeader from "./table-header";
+import type { IUser } from "@app/types";
+import { modalContentAtom, modalOpenAtom } from "@app/shared/atoms";
+import { useSetAtom } from "jotai";
+import ConfirmationModalChild from "@app/shared/ui/confirmation-modal-child";
 
 const TableData = () => {
-  const { loading, data, currentQuery, fetchData } = useFetchUser();
+  const { loading, data, currentQuery, fetchData, toggleActive } =
+    useFetchUser();
+  const setOpen = useSetAtom(modalOpenAtom);
+  const setContent = useSetAtom(modalContentAtom);
 
   const tableProps = useMemo(() => {
     return {
@@ -42,6 +49,24 @@ const TableData = () => {
     fetchData(newQuery);
   };
 
+  const handleOnTogleActive = (data: IUser) => {
+    const newStatus = !(data.isActive || false);
+    setContent(
+      <ConfirmationModalChild
+        title="Confirmation"
+        message={`Are you sure to ${
+          newStatus ? "Active" : "Inactive"
+        } this User?`}
+        onCancel={() => setOpen(false)}
+        onConfirm={() => {
+          toggleActive(data);
+          setOpen(false);
+        }}
+      />
+    );
+    setOpen(true);
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
@@ -56,7 +81,12 @@ const TableData = () => {
             <TableHeader />
             <TableBody>
               {data?.data.map((row, index) => (
-                <RowItem index={index} data={row} key={row.id} />
+                <RowItem
+                  index={index}
+                  data={row}
+                  key={row.id}
+                  onToggleActive={handleOnTogleActive}
+                />
               ))}
             </TableBody>
             <TableFooter>

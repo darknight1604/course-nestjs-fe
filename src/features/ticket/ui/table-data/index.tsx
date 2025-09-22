@@ -67,6 +67,7 @@ const TableData = () => {
         title="Confirmation"
         message="Are you sure to do this?"
         onCancel={() => setOpen(false)}
+        confirmBtnColor="error"
         onConfirm={() => {
           deleteTicket(ticket.id || 0);
           setOpen(false);

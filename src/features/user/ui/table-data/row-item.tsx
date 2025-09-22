@@ -1,13 +1,16 @@
 import { DateTimeUtil } from "@app/shared/utils/date-time-utils";
 import type { IUser } from "@app/types";
-import { TableCell, TableRow, Chip } from "@mui/material";
+import { TableCell, TableRow, Chip, IconButton } from "@mui/material";
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
+import { styles } from "./styles";
 
 interface IRowItemProps {
   index: number;
   data: IUser;
+  onToggleActive?: (data: IUser) => void;
 }
 
-const RowItem = ({ data, index }: IRowItemProps) => {
+const RowItem = ({ data, index, onToggleActive }: IRowItemProps) => {
   return (
     <TableRow key={data.id}>
       <TableCell>{index + 1}</TableCell>
@@ -17,11 +20,21 @@ const RowItem = ({ data, index }: IRowItemProps) => {
           label={data.isActive ? "Active" : "Inactive"}
           color={data.isActive ? "success" : "error"}
           size="small"
+          sx={styles.chipLabel}
         />
       </TableCell>
       <TableCell>{data.roles?.join(", ")}</TableCell>
       <TableCell>{DateTimeUtil.formatWithTZ(data.createdDate)}</TableCell>
       <TableCell>{DateTimeUtil.formatWithTZ(data.updatedDate)}</TableCell>
+      <TableCell align="center">
+        <IconButton
+          aria-label="toggle-active"
+          color="primary"
+          onClick={() => onToggleActive?.(data)}
+        >
+          <CachedOutlinedIcon />
+        </IconButton>
+      </TableCell>
     </TableRow>
   );
 };

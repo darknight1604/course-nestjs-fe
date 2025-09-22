@@ -10,6 +10,7 @@ const TableHeader = () => {
         <TableCell>Roles</TableCell>
         <TableCell>Created Date</TableCell>
         <TableCell>Updated Date</TableCell>
+        <TableCell align="center">Actions</TableCell>
       </TableRow>
     </TableHead>
   );
