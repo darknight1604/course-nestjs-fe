@@ -1,5 +1,3 @@
-import type { ROLES } from "@app/config/contants";
-
 export interface PaginationQuery {
   page?: number; // default 1
   limit?: number; // default 10
@@ -63,7 +61,7 @@ export interface IUser {
   isActive?: boolean;
   createdDate?: Date;
   updatedDate?: Date;
-  roles?: ROLES[];
+  roles?: string[];
 }
 
 export type IGetListUserResponse = PaginationResponse<IUser>;
@@ -71,6 +69,7 @@ export type IGetListUserResponse = PaginationResponse<IUser>;
 export interface SearchUserQuery extends PaginationQuery {
   username?: string;
   isActive?: string;
+  role?: string;
 }
 
 export interface UpdateUserRequest {

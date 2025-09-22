@@ -1,13 +1,18 @@
-import { Box, Button, Stack, TextField, MenuItem } from "@mui/material";
-import { Formik, Form } from "formik";
+import { ROLES } from "@app/config/contants";
+import type { SearchUserQuery } from "@app/types";
+import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
+import { Form, Formik } from "formik";
+import { useEffect } from "react";
 import * as Yup from "yup";
 import useFetchUser from "../../hooks";
-import { useEffect } from "react";
-import type { SearchUserQuery } from "@app/types";
 
+const rolesOptions = Object.values(ROLES).concat();
 const validationSchema = Yup.object({
   username: Yup.string().optional(),
   isActive: Yup.boolean().optional(),
+  role: Yup.string()
+    .oneOf([...rolesOptions, ""])
+    .optional(),
 });
 
 const SearchForm = () => {
@@ -15,6 +20,7 @@ const SearchForm = () => {
   const initialValues: SearchUserQuery = {
     username: "",
     isActive: undefined,
+    role: "",
   };
 
   const onSearch = (values: SearchUserQuery) => {
@@ -32,7 +38,7 @@ const SearchForm = () => {
       validationSchema={validationSchema}
       onSubmit={onSearch}
     >
-      {({ values, handleChange, resetForm }) => (
+      {({ values, handleChange, resetForm, touched, errors }) => (
         <Form>
           <Box sx={{ p: 2 }}>
             <Stack spacing={2}>
@@ -54,6 +60,24 @@ const SearchForm = () => {
                 >
                   <MenuItem value="true">Active</MenuItem>
                   <MenuItem value="false">Inactive</MenuItem>
+                </TextField>
+
+                {/* Status */}
+                <TextField
+                  select
+                  label="Role"
+                  name="role"
+                  value={values.role}
+                  onChange={handleChange}
+                  error={touched.role && Boolean(errors.role)}
+                  helperText={touched.role && errors.role}
+                  fullWidth
+                >
+                  {rolesOptions.map((role) => (
+                    <MenuItem key={role} value={role}>
+                      {role}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Stack>
 

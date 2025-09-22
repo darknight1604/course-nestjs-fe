@@ -1,4 +1,8 @@
-export type ROLES = "ADMIN" | "USER" | "SUPER_ADMIN";
+export enum ROLES {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  SUPER_ADMIN = "SUPER_ADMIN",
+}
 
 export enum TICKET_STATUS {
   NEW = "New",
