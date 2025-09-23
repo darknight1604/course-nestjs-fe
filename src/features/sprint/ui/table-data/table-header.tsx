@@ -7,6 +7,9 @@ const TableHeader = () => {
         <TableCell>#</TableCell>
         <TableCell>Title</TableCell>
         <TableCell>Created By</TableCell>
+        <TableCell>Team</TableCell>
+        <TableCell>Start Date</TableCell>
+        <TableCell>End Date</TableCell>
         <TableCell>Created Date</TableCell>
         <TableCell>Updated Date</TableCell>
         <TableCell align="center">Actions</TableCell>

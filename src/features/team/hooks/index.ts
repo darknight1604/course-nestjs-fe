@@ -32,6 +32,8 @@ const useFetchData = () => {
         })
       );
       setData(response);
+
+      return response.data;
     } catch {
       setSnackbar({
         open: true,

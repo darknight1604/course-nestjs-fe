@@ -15,6 +15,7 @@ export const DATE_FORMATS = {
   fullTime: "DD/MM/YYYY HH:mm:ss",
   shortTime: "DD/MM/YYYY",
   time: "HH:mm:ss",
+  ymd: "YYYY-MM-DD",
 };
 
 export const DEFAULT_VALUES = {

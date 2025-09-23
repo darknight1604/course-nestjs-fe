@@ -116,6 +116,7 @@ export interface ISprint {
   id?: number;
   title?: string;
   teamId?: number;
+  teamName?: string;
   createdById?: number;
   createdBy?: string;
   createdDate?: Date;
@@ -138,6 +139,7 @@ export interface UpdateSprintRequest extends CreateSprintRequest {
 export interface CreateSprintRequest {
   title: string;
   teamId?: number;
+  teamName?: string;
   startDate?: Date;
   endDate?: Date;
 }
