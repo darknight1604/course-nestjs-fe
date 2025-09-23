@@ -109,3 +109,41 @@ export interface CreateTeamRequest {
 export interface SearchTeamFormValues {
   name?: string;
 }
+
+// End Team
+
+export interface ISprint {
+  id?: number;
+  title?: string;
+  teamId?: number;
+  createdById?: number;
+  createdBy?: string;
+  createdDate?: Date;
+  updatedDate?: Date;
+  startDate?: Date;
+  endDate?: Date;
+}
+
+export type IGetListSprintResponse = PaginationResponse<ISprint>;
+
+export interface SearchSprintQuery extends PaginationQuery {
+  title?: string;
+  teamId?: number;
+}
+
+export interface UpdateSprintRequest extends CreateSprintRequest {
+  id?: number;
+}
+
+export interface CreateSprintRequest {
+  title: string;
+  teamId?: number;
+  startDate?: Date;
+  endDate?: Date;
+}
+export interface SearchSprintFormValues {
+  title?: string;
+  teamId?: number;
+}
+
+// End Team

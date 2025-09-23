@@ -10,6 +10,7 @@ import List from "@mui/material/List";
 import { useMemo } from "react";
 import SideBarItem from "./side-bar-item";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import AirlineStopsOutlinedIcon from "@mui/icons-material/AirlineStopsOutlined";
 
 interface IAppDrawerProps {
   isOpen: boolean;
@@ -40,6 +41,12 @@ const AppDrawer = ({ isOpen, handleOpen, width = 240 }: IAppDrawerProps) => {
         name: "Team",
         path: buildPath([routePaths.admin.path, routePaths.team.path]),
         icon: <GroupsOutlinedIcon />,
+        requiredRoles: ["ADMIN", "SUPER_ADMIN"],
+      },
+      {
+        name: "Sprint",
+        path: buildPath([routePaths.admin.path, routePaths.sprint.path]),
+        icon: <AirlineStopsOutlinedIcon />,
         requiredRoles: ["ADMIN", "SUPER_ADMIN"],
       },
     ];

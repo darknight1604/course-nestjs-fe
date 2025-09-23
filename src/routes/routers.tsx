@@ -6,6 +6,7 @@ import {
   LogoutPage,
   NotFoundPage,
   RegisterPage,
+  SprintPage,
   TeamPage,
   TicketPage,
   UserPage,
@@ -27,6 +28,7 @@ const Routers = () => {
           <Route path={routePaths.user.name} element={<UserPage />} />
           <Route path={routePaths.logout.name} element={<LogoutPage />} />
           <Route path={routePaths.team.name} element={<TeamPage />} />
+          <Route path={routePaths.sprint.name} element={<SprintPage />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />

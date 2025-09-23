@@ -12,6 +12,7 @@ export const routePaths: Record<string, RoutePath> = {
   logout: { name: "logout", path: "/logout" },
   home: { name: "home", path: "/" },
   team: { name: "team", path: "/team" },
+  sprint: { name: "sprint", path: "/sprint" },
 };
 
 export function buildPath(paths: string[]) {

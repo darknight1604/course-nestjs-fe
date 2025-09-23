@@ -2,7 +2,7 @@ import { ROW_PER_PAGE, ROW_PER_PAGE_OPTION } from "@app/config/contants";
 import { modalContentAtom, modalOpenAtom } from "@app/shared/atoms";
 import ConfirmationModalChild from "@app/shared/ui/confirmation-modal-child";
 import EmptySearchingData from "@app/shared/ui/empty-searching-data";
-import type { ITeam } from "@app/types";
+import type { ISprint } from "@app/types";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import {
   Button,
@@ -25,7 +25,7 @@ import { styles } from "./styles";
 import TableHeader from "./table-header";
 
 const TableData = () => {
-  const { loading, data, currentQuery, fetchData, deleteTeam, createTeam } =
+  const { loading, data, currentQuery, fetchData, deleteSprint, createSprint } =
     useFetchData();
   const setOpen = useSetAtom(modalOpenAtom);
   const setContent = useSetAtom(modalContentAtom);
@@ -61,7 +61,7 @@ const TableData = () => {
     fetchData(newQuery);
   };
 
-  const handleDelete = (data: ITeam) => {
+  const handleDeleteSprint = (data: ISprint) => {
     setContent(
       <ConfirmationModalChild
         title="Confirmation"
@@ -69,7 +69,7 @@ const TableData = () => {
         onCancel={() => setOpen(false)}
         confirmBtnColor="error"
         onConfirm={() => {
-          deleteTeam(data.id || 0);
+          deleteSprint(data.id || 0);
           setOpen(false);
         }}
       />
@@ -81,7 +81,7 @@ const TableData = () => {
     setContent(
       <CreateForm
         onSubmit={(values) => {
-          createTeam(values);
+          createSprint(values);
           setOpen(false);
         }}
       />
@@ -89,7 +89,7 @@ const TableData = () => {
     setOpen(true);
   };
 
-  const handleEdit = (team: ITeam) => {
+  const handleEditSprint = (team: ISprint) => {
     setContent(
       <CreateForm
         id={team.id}
@@ -129,8 +129,8 @@ const TableData = () => {
                   index={index}
                   data={row}
                   key={row.id}
-                  onDelete={handleDelete}
-                  onEdit={handleEdit}
+                  onDelete={handleDeleteSprint}
+                  onEdit={handleEditSprint}
                 />
               ))}
             </TableBody>

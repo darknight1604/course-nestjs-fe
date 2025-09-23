@@ -8,3 +8,4 @@ export { default as LogoutPage } from "./admin/logout";
 export { default as NotFoundPage } from "./not-found";
 export { default as RegisterPage } from "./register";
 export { default as TeamPage } from "./admin/team";
+export { default as SprintPage } from "./admin/sprint";
